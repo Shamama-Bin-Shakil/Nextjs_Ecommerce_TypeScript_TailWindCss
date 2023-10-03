@@ -3,30 +3,10 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { store, useAppSelector } from "../store/store";
 import { useDispatch } from "react-redux";
-import { useUserLogoutMutation } from "../store/User";
 import { useRouter } from "next/navigation";
-import { userLogoutStore } from "../store/Authentication";
-import { toast } from "react-toastify";
-import Loading from "../loading";
 
 const MenuBar = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-
   const states = useAppSelector((state) => state.authentication);
-  const [userLogout, { isLoading, isSuccess }] = useUserLogoutMutation();
-
-  if (isLoading) return <Loading />;
-
-  const Logout = () => {
-    userLogout(true);
-    dispatch(userLogoutStore());
-    router.push("/login");
-  };
-
-  if (isSuccess) {
-    toast.success("Logout Successfully");
-  }
 
   return (
     <>
@@ -74,7 +54,7 @@ const MenuBar = () => {
             </svg>
           </Link>
 
-          <span onClick={Logout}>
+          <span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
